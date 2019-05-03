@@ -4,8 +4,8 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const app = express();
 
-app.use(express.json());
 app.set('port', process.env.PORT || 3000).
+app.use(express.json());
 
 app.get('/api/v1/series', (request, response) => {
   database('series').select()
