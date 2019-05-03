@@ -1,33 +1,43 @@
+const seriesData = require('../../series');
+const episodesData = require('../../episodes');
 
-exports.seed = function(knex, Promise) {
-  // We must return a Promise from within our seed function
-  // Without this initial `return` statement, the seed execution
-  // will end before the asynchronous tasks have completed
-  return knex('episodes').del() // delete all footnotes first
-    .then(() => knex('series').del()) // delete all papers
+const createSeries = (knex, series) => {
+  return knex('series').insert({
+    show: series.show,
+    showDescription: series.showDescription,
+    genre: series.genre
+  }, 'id')
+  .then(seriesId => {
+    let episodesPromises = [];
 
-    // Now that we have a clean slate, we can re-insert our paper data
-    .then(() => {
-      return Promise.all([
-        
-        // Insert a single paper, return the paper ID, insert 2 footnotes
-        knex('series').insert({
-          show: 'Boruto: Naruto Next Generations',
-          showDescription: "Unlike Naruto, Boruto is about a son who's living his life along his friend, avoiding being in his father's shadow. He has adventures in younger version, in school, revealing new abilities.', publisher: 'Minnesota",
-          genre: 'Adventure fiction'
-        }, 'id')
-        .then(series => {
-          return knex('episodes').insert([
-            { 
-             episodeTitle: 'Uzumaki Boruto!!',
-             description: "Prior to entering the Ninja Academy, Boruto Uzumaki, the son of Naruto Uzumaki, meets a bullied boy named Denki Kaminarimon, who is being forced to join the academy for the sake of his father's company.",
-             seriesId: series[0] 
-            }
-          ])
+    series.episodes.forEach(episode => {
+      episodesPromises.push(
+        createEpisode(knex, {
+          episode: episode,
+          seriesId: seriesId[0]
         })
-        .then(() => console.log('Seeding complete!'))
-        .catch(error => console.log(`Error seeding data: ${error}`))
-      ]) // end return Promise.all
+      )
+    });
+
+    return Promise.all(episodesPromises);
+  })
+};
+
+const createEpisode = (knex, episode) => {
+  return knex('episodes').insert(episode);
+};
+
+exports.seed = (knex, Promise) => {
+  return knex('episodes').del()
+    .then(() => knex('series').del())
+    .then(() => {
+      let seriesPromises = [];
+
+      seriesData.forEach(series => {
+        seriesPromises.push(createSeries(knex, series));
+      });
+
+      return Promise.all(seriesPromises);
     })
     .catch(error => console.log(`Error seeding data: ${error}`));
 };
