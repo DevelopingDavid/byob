@@ -6,7 +6,6 @@ const app = express();
 
 app.use(express.json());
 app.set('port', process.env.PORT || 3000).
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 app.get('/api/v1/series', (request, response) => {
   database('series').select()
