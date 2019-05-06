@@ -28,3 +28,35 @@ app.get('/api/v1/episodes', (request, response) => {
       response.status(500).json({ error });
     });
 });
+
+app.get('/api/v1/series/:id', (request, response) => {
+  database('series').where('id', request.params.id).select()
+    .then(series => {
+      if(series.length) {
+        response.status(200).json(series);
+      } else {
+        response.status(404).json({
+          error: `Could not find series ${request.params.id}`
+        });
+      }
+    })
+    .catch(error => {
+      response.status(500).json(`Something went wrong with the server: ${error}`)
+    });
+});
+
+app.get('/api/v1/episode/:id', (request, response) => {
+  database('episode').where('id', request.params.id).select()
+    .then(episode => {
+      if(episode.length) {
+        response.status(200).json(series);
+      } else {
+        response.status(404).json({
+          error: `Could not find episode ${request.params.id}`
+        });
+      }
+    })
+    .catch(error => {
+      response.status(500).json(`Something went wrong with the server: ${error}`)
+    });
+});
