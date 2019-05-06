@@ -32,7 +32,7 @@ app.get('/api/v1/episodes', (request, response) => {
 app.get('/api/v1/series/:id', (request, response) => {
   database('series').where('id', request.params.id).select()
     .then(series => {
-      if(series.length) {
+      if (series.length) {
         response.status(200).json(series);
       } else {
         response.status(404).json({
@@ -48,7 +48,7 @@ app.get('/api/v1/series/:id', (request, response) => {
 app.get('/api/v1/episode/:id', (request, response) => {
   database('episode').where('id', request.params.id).select()
     .then(episode => {
-      if(episode.length) {
+      if (episode.length) {
         response.status(200).json(series);
       } else {
         response.status(404).json({
