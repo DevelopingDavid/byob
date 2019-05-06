@@ -6,12 +6,12 @@ const series = [
   },
   {
     "show": "Black Butler", 
-    "showDescription": "A young boy sells his soul to a demon in order to avenge his family's death and successfully lead their influential toy manufacturing company. The demon takes the form of a loyal butler who's always dressed in black and is required to protect, serve and arrive whenever summoned by his young master Ciel.",
+    "showDescription": "A young boy sells his soul to a demon in order to avenge his family's death and successfully lead their influential toy manufacturing company. The demon takes the form of a loyal butler who's always dressed in black.",
     "genre": "Thriller mystery"
   },
   {
     "show": "Death Parade",
-    "showDescription": "A young boy sells his soul to a demon in order to avenge his family's death and successfully lead their influential toy manufacturing company. The demon takes the form of a loyal butler who's always dressed in black and is required to protect, serve and arrive whenever summoned by his young master Ciel.",
+    "showDescription": "After death, humans go to either heaven or hell. But for some, at the instant of their death, they arrive at the Quindecim, a bar attended by the mysterious white-haired Decim.",
     "genre": "Psychological thriller"
   }
 ];
