@@ -9,35 +9,36 @@ const createSeries = (knex, series) => {
   }, 'id')
   .then(seriesId => {
     let episodesPromises = [];
-
-    series.episodes.forEach(episode => {
-      episodesPromises.push(
-        createEpisode(knex, {
-          episode: episode,
-          seriesId: seriesId[0]
-        })
-      )
-    });
-
-    return Promise.all(episodesPromises);
+    episodesData.forEach(episode => {
+      if (episode.series_Id === series.id) {
+        episodesPromises.push(
+          createEpisode(knex, {
+            episodeTitle: episode.episodeTitle,
+            description: episode.description,
+            series_Id: seriesId[0]
+          })
+        )
+      }
+    })
+    return Promise.all(episodesPromises)
   })
-};
+}
 
 const createEpisode = (knex, episode) => {
-  return knex('episodes').insert(episode);
+  return knex('episodes').insert(episode)
 };
 
-exports.seed = (knex, Promise) => {
+exports.seed = function(knex, Promise) {
   return knex('episodes').del()
     .then(() => knex('series').del())
-    .then(() => {
+    .then(function () {
       let seriesPromises = [];
 
       seriesData.forEach(series => {
-        seriesPromises.push(createSeries(knex, series));
-      });
-
-      return Promise.all(seriesPromises);
+        seriesPromises.push(createSeries(knex, series))
+      })
+      
+      return Promise.all(seriesPromises)
     })
-    .catch(error => console.log(`Error seeding data: ${error}`));
+    .catch(error => console.log(`Error seeding data: ${error}`))
 };

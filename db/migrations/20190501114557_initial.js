@@ -5,7 +5,6 @@ exports.up = function(knex, Promise) {
       table.string('show');
       table.string('showDescription');
       table.string('genre');
-
       table.timestamps(true, true);
     }),
 
@@ -13,7 +12,7 @@ exports.up = function(knex, Promise) {
       table.increments('id').primary();
       table.string('episodeTitle');
       table.string('description');
-      table.integer("seriesId")
+      table.integer("seriesId").unsigned();
       table.foreign('seriesId')
         .references('series.id');
 
