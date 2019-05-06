@@ -27,6 +27,7 @@ Data should look like something like this.
     "genre": "Psychological thriller"
 }]
 ```
+### episodes
 
 #### `GET /api/v1/episodes`
 Data should look like something like this.
@@ -43,6 +44,7 @@ Data should look like something like this.
     "series_Id": 1
   }]
 ```
+### Series by id
 
 #### `GET /api/v1/series/:id/`
 Data should look like something like this.
@@ -56,6 +58,7 @@ Data should look like something like this.
     }]
 ```
 
+### Episodes by id
 
 #### `GET /api/v1/episode/:id/`
 Data should look like something like this.
